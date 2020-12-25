@@ -88,8 +88,6 @@ const CompositorUserMedia = () => {
 
   const dispatch = useDispatch();
   const { gotPermissions, cameras, microphones, videoTracksMap, audioTracksMap, displayScreenTrack } = useSelector((state) => state.media);
-  const { videoTrack1DeviceId : publishVideoTrack1DeviceId } = useSelector((state) => state.publishSettings);
-  const { videoTrack1DeviceId : compositeVideoTrack1DeviceId } = useSelector((state) => state.compositeSettings);
   const videoTracksMapRef = useRef(videoTracksMap);
   const audioTracksMapRef = useRef(audioTracksMap);
 
@@ -110,19 +108,6 @@ const CompositorUserMedia = () => {
       loadUserMediaForMicrophones(dispatch, microphones, audioTracksMapRef.current);
   }, [dispatch,gotPermissions,microphones]);
 
-  // start screen sharing for 'publish' example
-  useEffect(() => {
-    if (publishVideoTrack1DeviceId === 'screen' && displayScreenTrack == null) {
-      loadDisplayScreenTrack(dispatch);
-    }
-  }, [dispatch,publishVideoTrack1DeviceId, displayScreenTrack])
-
-  // start screen sharing for 'composite' example
-  useEffect(() => {
-    if (compositeVideoTrack1DeviceId === 'screen' && displayScreenTrack == null) {
-      loadDisplayScreenTrack(dispatch);
-    }
-  }, [dispatch,compositeVideoTrack1DeviceId, displayScreenTrack])
 
   useEffect(() => {
     let audioTrack = null;
